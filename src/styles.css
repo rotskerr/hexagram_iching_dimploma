@@ -1,0 +1,563 @@
+:root {
+  --light-foreground: #222;
+  --light-background: #eee;
+  --dark-foreground: #eee;
+  --dark-background: #222;
+  --font: "Cantarell", sans-serif;
+  --hexagram-width: 10rem;
+  --hexagram-height: 7rem;
+  --coin-width: 1.8rem;
+}
+
+@font-face {
+  font-family: "Cantarell";
+  src: url("./Cantarell-Regular.ttf") format("truetype"),
+    url("./Cantarell-Bold.ttf") format("truetype"),
+    url("./Cantarell-BoldItalic.ttf") format("truetype"),
+    url("./Cantarell-Italic.ttf") format("truetype");
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+html,
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: var(--font);
+  font-size: 100%;
+}
+
+.app-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.app-container.light {
+  color: var(--light-foreground);
+  background-color: var(--light-background);
+}
+
+.app-container.dark {
+  color: var(--dark-foreground);
+  background-color: var(--dark-background);
+}
+
+.app-container .vertical-scroll {
+  width: 100vw;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.app-container .contents {
+  position: relative;
+  max-width: 1024px;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.start-button.visible {
+  display: block;
+}
+
+.start-button.hidden {
+  display: none;
+}
+
+.start-button {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  width: 70%;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  font-family: var(--font);
+  font-size: 1rem;
+  border-width: 2pt;
+  border-style: solid;
+  transform: translate(-50%, -50%);
+  transition: top 0.4s ease-in-out;
+  user-select: none;
+}
+
+.start-button:hover {
+  cursor: pointer;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .start-button {
+    top: 55%;
+  }
+}
+
+.start-button.start {
+  top: 50%;
+}
+
+.start-button.light {
+  color: var(--light-foreground);
+  background-color: var(--light-background);
+  border-color: var(--light-foreground);
+}
+
+.start-button.light:active {
+  color: var(--light-background);
+  background-color: var(--light-foreground);
+  border-color: var(--light-foreground);
+}
+
+.start-button.dark {
+  color: var(--dark-foreground);
+  background-color: var(--dark-background);
+  border-color: var(--dark-foreground);
+}
+
+.start-button.dark:active {
+  color: var(--dark-background);
+  background-color: var(--dark-foreground);
+  border-color: var(--dark-foreground);
+}
+
+.start-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  width: 1.3rem;
+}
+
+.back-button:hover {
+  cursor: pointer;
+}
+
+.back-button.light {
+  stroke: var(--light-foreground);
+  fill: var(--light-foreground);
+}
+
+.back-button.dark {
+  stroke: var(--dark-foreground);
+  fill: var(--dark-foreground);
+}
+
+.hexagram {
+  display: inline-flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  width: var(--hexagram-width);
+  height: var(--hexagram-height);
+  max-width: var(--hexagram-max-width);
+}
+
+.hexagram .yin,
+.hexagram .yang,
+.hexagram > div {
+  width: 100%;
+  height: 10%;
+}
+
+.hexagram > div::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+
+.hexagram.light .yin > div,
+.hexagram.light .yang > div {
+  background-color: var(--light-foreground);
+}
+
+.hexagram.dark .yin > div,
+.hexagram.dark .yang > div {
+  background-color: var(--dark-foreground);
+}
+
+.hexagram .yin > div {
+  width: 45%;
+  height: 100%;
+}
+
+.hexagram .yin > div:first-child {
+  float: left;
+}
+
+.hexagram .yin > div:last-child {
+  float: right;
+}
+
+.hexagram .yang > div {
+  width: 100%;
+  height: 100%;
+}
+
+.after-start-enter {
+  opacity: 0.01;
+}
+
+.after-start-enter.after-start-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.coinshuffle-container {
+  transition: all 0.5s ease;
+}
+
+.coinshuffle-container .hexagram {
+  position: absolute;
+  top: 29%;
+  left: calc(50% - (var(--hexagram-width) / 2));
+  transform: translateY(-50%);
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .coinshuffle-container .hexagram {
+    top: 40%;
+    left: initial;
+    right: 15%;
+    transform: translateY(-100%);
+  }
+}
+
+.coin {
+  position: absolute;
+  top: 40%;
+  width: var(--coin-width);
+  height: var(--coin-width);
+  transform: translateY(-50%);
+  transition: width 0.05s ease;
+}
+
+.coin0 {
+  left: calc(50% - (var(--hexagram-width) / 2));
+}
+
+.coin1 {
+  left: calc(50% - (var(--coin-width) / 2));
+}
+
+.coin2 {
+  left: calc(50% + (var(--hexagram-width) / 2) - var(--coin-width));
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .coin {
+    transform: translateY(-100%);
+  }
+
+  .coin0 {
+    left: 15%;
+  }
+
+  .coin1 {
+    left: 25%;
+  }
+
+  .coin2 {
+    left: 35%;
+  }
+}
+
+.coin > circle {
+  stroke-width: 0.5pt;
+  stroke: #888;
+}
+
+.coin > circle.yin {
+  fill: black;
+}
+
+.coin > circle.yang {
+  fill: white;
+}
+
+.coin.flip {
+  width: 0;
+}
+
+.result {
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 0; */
+  /* width: 100vw; */
+  /* height: 100vh; */
+  padding: 2rem 3rem;
+  box-sizing: border-box;
+  /* overflow: auto; */
+}
+.result::-webkit-scrollbar {
+  -webkit-appearance: scrollbartrack-vertical;
+}
+.result::-webkit-scrollbar {
+  -webkit-appearance: scrollbarthumb-vertical;
+}
+
+.result .hexagram {
+  position: relative;
+  top: 0.6rem;
+  left: calc(50% - (var(--hexagram-width) / 2));
+  padding: 0.6rem 0 0.4rem 0;
+  margin-bottom: 1.3rem;
+}
+
+h3 {
+  padding: 0.4rem 0.4rem 1rem 0.4rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  line-height: 120%;
+}
+
+h4 {
+  padding: 0.4rem 0.4rem 1rem 0.4rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 120%;
+}
+
+h5 {
+  padding: 0.4rem 0.4rem 1rem 0.4rem;
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 120%;
+}
+
+p {
+  padding: 0.4rem 0.4rem 1rem 0.4rem;
+  font-size: 1rem;
+  line-height: 120%;
+}
+
+strong {
+  font-weight: bold;
+}
+
+blockquote {
+  padding: 1rem 1rem;
+  font-weight: bold;
+}
+@media (min-width: 640px) {
+  blockquote {
+    padding: 1rem 2.5rem;
+  }
+}
+
+pre {
+  padding: 0.4rem;
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 112%;
+  white-space: pre-wrap;
+}
+
+.darkmode-switch {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 1.3rem;
+}
+
+.darkmode-switch:hover {
+  cursor: pointer;
+}
+
+.darkmode-switch.light {
+  stroke: var(--light-foreground);
+  fill: var(--light-foreground);
+}
+
+.darkmode-switch.dark {
+  stroke: var(--dark-foreground);
+  fill: var(--dark-foreground);
+}
+
+.logbook-button {
+  position: fixed;
+  top: 1rem;
+  right: 3.5rem;
+  width: 1.3rem;
+}
+
+.logbook-button:hover {
+  cursor: pointer;
+}
+
+.logbook-button.light {
+  stroke: var(--light-foreground);
+  fill: var(--light-foreground);
+}
+
+.logbook-button.dark {
+  stroke: var(--dark-foreground);
+  fill: var(--dark-foreground);
+}
+
+.logbook {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.logbook .logbook-window {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+}
+
+.logbook .logbook-window.dark {
+  background-color: var(--dark-background);
+}
+.logbook .logbook-window.light {
+  background-color: var(--light-background);
+}
+
+.logbook .logbook-close-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  background-color: transparent;
+  border: none;
+  font-size: 2.5rem;
+  line-height: 2.5rem;
+  user-select: none;
+}
+
+.logbook .logbook-close-button:hover {
+  cursor: pointer;
+}
+
+.logbook .logbook-close-button.dark {
+  color: var(--dark-foreground);
+}
+.logbook .logbook-close-button.light {
+  color: var(--light-foreground);
+}
+
+.logbook .logbook-contents {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.logbook .hexagram-list {
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.logbook .hexagram-list ul {
+  display: flex;
+  flex-direction: column;
+  list-style-position: inside;
+  list-style-type: disc;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+}
+
+.logbook .hexagram-list li {
+  padding: 0.3rem 0;
+}
+
+.logbook .hexagram-list-button {
+  display: inline-block;
+  border: 0;
+  background-color: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: 1rem;
+}
+.logbook .hexagram-list-button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.logbook .hexagram-list .log-back-button {
+  position: absolute;
+  top: 0.23rem;
+  left: 0.5rem;
+  width: 1.3rem;
+  border: none;
+}
+.logbook .hexagram-list .log-back-button:hover {
+  cursor: pointer;
+}
+.logbook .hexagram-list .log-back-button.light {
+  stroke: var(--light-foreground);
+  fill: var(--light-foreground);
+}
+.logbook .hexagram-list .log-back-button.dark {
+  stroke: var(--dark-foreground);
+  fill: var(--dark-foreground);
+}
+
+.logbook .hexagram-list .hexagram-text {
+  height: 100%;
+  padding: 2.5rem 0;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.logbook .logbook-topbar {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logbook-topbar ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.logbook-topbar li {
+  width: 8rem;
+  color: inherit;
+  background-color: transparent;
+}
+
+.logbook-topbar li div {
+  padding: 1rem 0.2rem;
+  text-align: center;
+}
+.logbook-topbar.dark li div:hover {
+  cursor: pointer;
+  border-bottom: 1pt solid var(--dark-foreground);
+}
+.logbook-topbar.light li div:hover {
+  cursor: pointer;
+  border-bottom: 1pt solid var(--light-foreground);
+}
+.logbook-topbar.dark li div.selected {
+  border-bottom: 1pt solid var(--dark-foreground);
+}
+.logbook-topbar.light li div.selected {
+  border-bottom: 1pt solid var(--light-foreground);
+}

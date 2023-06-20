@@ -24,7 +24,7 @@ const MDHexagramText = ({ hexagramNumber }) => {
     let isMounted = true;
 
     axios
-      .get(`http://localhost/api/book/${hexagramNumber}`)
+      .get(`https://rotskerr.s-host.net/api/book/${hexagramNumber}`)
       .then((response) => {
         if (isMounted) {
           const responseData = response.data;
@@ -46,7 +46,7 @@ const MDHexagramText = ({ hexagramNumber }) => {
   useEffect(() => {
     if (ipAddress) {
       axios
-        .get(`http://localhost/api/ips/${ipAddress}`)
+        .get(`https://rotskerr.s-host.net/api/ips/${ipAddress}`)
         .then((response) => {
           setServerResponse(response.data);
           console.log(response.data);

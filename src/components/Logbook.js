@@ -20,41 +20,58 @@ const Back = ({ onClick }) => {
 
 const HexagramList = () => {
   const [showHexagram, setShowHexagram] = useState(0);
+  const [serverResponse, setServerResponse] = useState("");
+  const [ipAddress, setIPAddress] = useState("");
 
   const itemClickHandler = (hexagramNumber) => (e) => {
     e.preventDefault();
     e.stopPropagation();
     setShowHexagram(hexagramNumber);
   };
-  const [serverResponse, setServerResponse] = useState("");
-  const [ipAddress, setIPAddress] = useState("");
 
   useEffect(() => {
+    let isMounted = true;
+
     axios
       .get("https://api.ipify.org/?format=json")
       .then((response) => {
         const data = response.data;
-        setIPAddress(data.ip);
-        console.log(data.ip);
+        if (isMounted) {
+          setIPAddress(data.ip);
+          console.log(data.ip);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
     if (ipAddress) {
+      let isMounted = true;
+
       axios
-        .get(`http://localhost/api/ips/${ipAddress}`)
+        .get(`https://rotskerr.s-host.net/api/ips/${ipAddress}`)
         .then((response) => {
-          setServerResponse(response.data);
-          console.log(response.data);
+          if (isMounted) {
+            setServerResponse(response.data);
+            console.log(response.data);
+          }
         })
         .catch((error) => {
           console.log(error);
         });
+
+      return () => {
+        isMounted = false;
+      };
     }
   }, [ipAddress]);
+
   return (
     <div className="hexagram-list">
       {showHexagram === 0 && (
@@ -67,8 +84,7 @@ const HexagramList = () => {
               >{`Hexagrama ${i + 1}`}</div>
             </li>
           ))}
-      <p>Кількість унікальних користувачів: {serverResponse}</p>
-
+          <p>Кількість унікальних користувачів: {serverResponse}</p>
         </ul>
       )}
       {showHexagram > 0 && (

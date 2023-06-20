@@ -43,20 +43,7 @@ const MDHexagramText = ({ hexagramNumber }) => {
     };
   }, [hexagramNumber]);
 
-  useEffect(() => {
-    if (ipAddress) {
-      axios
-        .get(`https://rotskerr.s-host.net/api/ips/${ipAddress}`)
-        .then((response) => {
-          setServerResponse(response.data);
-          console.log(response.data);
 
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [ipAddress]);
 
   return (
     <>
